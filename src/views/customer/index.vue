@@ -14,7 +14,7 @@
 
       <!--表格-->
       <el-row style="margin-top: 10px;">
-        <el-table v-loading="loading" :data="customerList" style="width: 100%" stripe border>
+        <el-table v-loading="loading" :data="customerList" style="width: 100%" stripe border @row-click="toRecord">
           <el-table-column prop="id" label="ID" width="80" align="center"></el-table-column>
           <el-table-column prop="customerName" label="姓名" width="100" align="center"></el-table-column>
           <el-table-column prop="customerPhone" label="手机号" width="120" align="center"></el-table-column>
@@ -29,9 +29,9 @@
           <el-table-column prop="customerRemark" label="备注"></el-table-column>
           <el-table-column label="操作" width="230" align="center">
             <template slot-scope="scope">
-              <el-button style="margin-left: 10px;" type="primary" plain size="mini" @click="toRecord(scope.row)">记录</el-button>
-              <el-button style="margin-left: 10px;" type="success" plain size="mini" @click="editCustom(scope.row)">编辑</el-button>
-              <el-button style="margin-left: 10px;" type="danger" plain size="mini" @click="deleteCustom(scope.row)">删除</el-button>
+              <el-button style="margin-left: 10px;" type="primary" plain size="mini" @click.stop="toRecord(scope.row)">记录</el-button>
+              <el-button style="margin-left: 10px;" type="success" plain size="mini" @click.stop="editCustom(scope.row)">编辑</el-button>
+              <el-button style="margin-left: 10px;" type="danger" plain size="mini" @click.stop="deleteCustom(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>

@@ -7,48 +7,48 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            总管理员
+            总客户
           </div>
-          <count-to :start-val="0" :end-val="baseData.adminCount" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="baseData.customerNum" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('messages')">
         <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+          <svg-icon icon-class="weixiu" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            总用户数
+            今日维修次数
           </div>
-          <count-to :start-val="0" :end-val="baseData.userCount" :duration="3000" class="card-panel-num" />
+            <count-to :start-val="0" :end-val="baseData.todayRepairNum" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('purchases')">
         <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="building" class-name="card-panel-icon" />
+          <svg-icon icon-class="baoxian" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            总楼房数
+            今日保险次数
           </div>
-          <count-to :start-val="0" :end-val="baseData.buildingCount" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="baseData.todayBaoxianNum" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('shoppings')">
         <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="car" class-name="card-panel-icon" />
+          <svg-icon icon-class="yingyee" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            总停车位
+            今日营业额
           </div>
-          <count-to :start-val="0" :end-val="baseData.carCount" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="baseData.todayRepairTotalMoney" :duration="3600" :decimals="2" class="card-panel-num" />
         </div>
       </div>
     </el-col>

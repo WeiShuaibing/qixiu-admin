@@ -6,7 +6,7 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
-import { getBaseData } from '../../../../api/home'
+import { getBaseDataOfChart } from '../../../../api/home'
 
 export default {
   mixins: [resize],
@@ -30,12 +30,19 @@ export default {
     chartData: {
       type: Object,
       required: true
+    },
+    chartDays: {
+      type: Number,
+      default: 7
     }
   },
   data() {
     return {
       chart: null,
-      activeUserData: []
+      num_list: [],
+      date_list: [],
+      baoxian_money_list: [],
+      showDays: 7
     }
   },
   watch: {
@@ -43,6 +50,13 @@ export default {
       deep: true,
       handler(val) {
         this.setOptions(val)
+      }
+    },
+    chartDays: {
+      deep: true,
+      handler(val) {
+        this.chartDays = val
+        this.initChart()
       }
     }
   },
@@ -59,29 +73,44 @@ export default {
     this.chart = null
   },
   methods: {
-    getBaseDate() {
-      getBaseData().then(res => {
-        console.log('x')
-        console.log(res.data.activeUserData)
-        this.activeUserData = res.data.activeUserData
-      })
-    },
     initChart() {
-      getBaseData().then(res => {
-        this.activeUserData = res.data.activeUserData
+      getBaseDataOfChart(this.chartDays).then(res => {
+        this.num_list = res.data.num_list
+        this.date_list = res.data.date_list
+        this.baoxian_money_list = res.data.baoxian_money_list
         this.chart = echarts.init(this.$el, 'macarons')
-        this.setOptions(this.activeUserData)
+        this.setOptions(this.num_list, this.date_list, this.baoxian_money_list)
       })
     },
-    setOptions(activeUserData) {
+    setOptions(num_list, date_list, baoxian_money_list) {
       this.chart.setOption({
         xAxis: {
-          data: ['七天前', '六天前', '五天前', '四天前', '前天', '昨天', '今天'],
+          data: date_list,
           boundaryGap: false,
           axisTick: {
             show: false
+          },
+          // x轴文字倾斜
+          axisLabel: {
+            interval: 0,
+            rotate: 45, // 倾斜度 -90 至 90 默认为0
+            margin: 2
           }
         },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 50,
+            end: 100
+          },
+          {
+            type: 'inside',
+            realtime: true,
+            start: 65,
+            end: 85
+          }
+        ],
         grid: {
           left: 10,
           right: 10,
@@ -102,10 +131,10 @@ export default {
           }
         },
         legend: {
-          data: ['活跃用户']
+          data: ['维修流水', '保险流水']
         },
         series: [{
-          name: '活跃用户', itemStyle: {
+          name: '维修流水', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -116,9 +145,28 @@ export default {
           },
           smooth: true,
           type: 'line',
-          data: activeUserData,
+          data: num_list,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
+        }, {
+          name: '保险流水',
+          smooth: true,
+          type: 'line',
+          itemStyle: {
+            normal: {
+              color: '#3888fa',
+              lineStyle: {
+                color: '#3888fa',
+                width: 2
+              },
+              areaStyle: {
+                color: '#f3f8ff'
+              }
+            }
+          },
+          data: baoxian_money_list,
+          animationDuration: 2800,
+          animationEasing: 'quadraticOut'
         }]
       })
     }

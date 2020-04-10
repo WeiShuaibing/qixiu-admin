@@ -5,7 +5,19 @@
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData" />
+        <el-dropdown trigger="click" @command="changeDays">
+          <span class="el-dropdown-link">
+            时间段<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+<!--            <el-dropdown-item command="7">7天</el-dropdown-item>-->
+            <el-dropdown-item command="30">1个月</el-dropdown-item>
+            <el-dropdown-item command="90">3个月</el-dropdown-item>
+            <el-dropdown-item command="180">半年</el-dropdown-item>
+            <el-dropdown-item command="365">一年</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      <line-chart :chart-data="lineChartData" :chartDays="chartDays" />
     </el-row>
   </div>
 </template>
@@ -43,16 +55,20 @@ export default {
   name: 'DashboardAdmin',
   components: {
     PanelGroup,
-    LineChart,
+    LineChart
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      lineChartData: lineChartData.newVisitis,
+      chartDays: 30
     }
   },
   methods: {
     handleSetLineChartData(type) {
       // this.lineChartData = lineChartData[type]
+    },
+    changeDays(command) {
+      this.chartDays = Number(command)
     }
   }
 }

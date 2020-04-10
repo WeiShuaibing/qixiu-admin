@@ -7,3 +7,13 @@ export function getBaseData() {
     method: 'GET'
   })
 }
+
+export function getBaseDataOfChart(days) {
+  return request({
+    url: BASE_URL + 'home/getBaseDataOfChart',
+    method: 'GET',
+    params: {
+      days
+    }
+  })
+}
